@@ -687,3 +687,108 @@ int search(char *PHONE, char *VEHICLE)
 
     return -1;
 }
+
+void searchdisplay(int RoW,int ColumN)
+{
+     int i,j,r=1,loop;
+
+
+    printf("\t\t\t");
+    for(loop=1;loop<=Column;loop++)
+    {
+        printf("      %d   ",loop);
+    }
+
+    printf("\n");
+    printf("\t\t\t");
+
+    for(loop=1;loop<=Column;loop++)
+    {
+        printf("..........");
+    }
+    printf("\n\n");
+    printf("\t");
+    for(i=0;i<Row;i++)
+    {
+
+        printf("\t%d |>  ",r);
+        r++;
+        for(j=0;j<Column;j++)
+        {
+            if(disp[i][j]=='x')
+            {
+                       printf("  [        ]",disp[i][j]);
+            }
+            else if(disp[i][j]=='A' || disp[i][j]=='B' || disp[i][j]=='C' || disp[i][j]=='O')
+            {
+                if(i==RoW-1 && j==ColumN-1)
+                    {
+                       printf("   [  *%c  ]",disp[i][j]);
+                    }
+                else
+                       printf("   [  %c   ]",disp[i][j]);
+
+            }
+            else
+            {
+                printf("   [  %c   ]",disp[i][j]);
+            }
+        }
+        printf("\n");
+        printf("\t");
+    }
+
+    printf("\n\n%30s             *Searched Vehicle\n\n"," ");
+
+}
+
+void searchingbydisplay()
+{
+
+    printf("\n\n\n");
+    genaralDisplay();
+    int r;
+    int c;
+    int index;
+
+    printf("\n\n");
+    printf("%30sEnter the Row Number   :  "," ");
+    scanf("%d",&r);
+    printf("%30sEnter the Column Number:  "," ");
+    scanf("%d",&c);
+    printf("\n\n");
+
+    system("cls");
+    index=searchbydisplay(r,c);
+
+    if(index!=-1)
+    {
+
+        printf("\n\n%30sVehicle Information >>>\n\n\n"," ");
+        printf("%30sArrival Date     : %d/%d/%d\n"," ",info[index].starttime.wDay,info[index].starttime.wMonth,info[index].starttime.wYear);
+        printf("%30sOwners Name      : %s\n"," ",info[index].name);
+        printf("%30sPhone Number     : %s\n"," ",info[index].phoneNumber);
+        printf("%30sVIN              : %s\n"," ",info[index].VIN);
+        printf("%30sSerial Number    : %s\n"," ",info[index].serialnumber);
+        printf("%30sVehicle Type     : %s\n"," ",info[index].type);
+        printf("%30sArrival Time     : %d-%d\n\n\n"," ",info [index].starttime.wHour,info[index].starttime.wMinute);
+        searchdisplay(r,c);
+    }
+    else
+    {
+        printf("\n\n\n%30sVehicle Not Found\n\n\n"," ");
+    }
+
+}
+
+int searchbydisplay(int r,int c)
+{
+    int i;
+
+    for(i=0;i<total;i++)
+    {
+        if(r==info[i].row && c==info[i].column)
+            return i;
+    }
+    return -1;
+}
